@@ -1,0 +1,26 @@
+= CloudBees action: Deploy the Task Definition for ECS Deployment
+
+Use this action to Deploy the task Definition for ECS Deployment.
+
+== Usage
+
+In your YAML file, add:
+
+[source,yaml]
+----
+      - name: Deploy Task Definition
+        uses: cloudbees-io/ecs-deploy-task-definition-private@v1
+        with:
+          task-definition: TaskDefinition <1>
+          service: Service name <2>
+          cluster: Cluster name <3>
+          wait-for-service-stability: Wait for service stability <4>
+          wait-for-minutes: Wait for minutes <5>
+          force-new-deployment: Force new deployment <6>
+----
+<1> The path to the ECS task definition JSON file.
+<2> The name of the ECS service to deploy to. The action will only register the task definition if no service is given.
+<3> The name of the ECS cluster to deploy to.
+<4> Whether to wait for the ECS service to reach stable state after deploying the new task definition. Valid value is "true". Will default to not waiting.
+<5> How long to wait for the ECS service to reach stable state, in minutes (default: 30 minutes, max: 6 hours).
+<6> Whether to force a new deployment of the service. Valid value is "true". Will default to not force a new deployment.

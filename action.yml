@@ -1,0 +1,36 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: action
+name: Deploy ECS Task Definition
+inputs:
+  task-definition:
+    description: 'The path to the ECS task definition JSON file.'
+    required: true
+  service:
+    description: 'The name of the ECS service to deploy to. The action will only register the task definition if no service is given.'
+    required: false
+  cluster:
+    description: 'The name of the ECS cluster to deploy to.'
+    required: false
+  wait-for-service-stability:
+    description: 'Whether to wait for the ECS service to reach stable state after deploying the new task definition. Valid value is "true". Will default to not waiting.'
+    required: false
+  wait-for-minutes:
+    description: 'How long to wait for the ECS service to reach stable state, in minutes (default: 30 minutes, max: 6 hours).'
+    required: false
+  force-new-deployment:
+    description: 'Whether to force a new deployment of the service. Valid value is "true". Will default to not force a new deployment.'
+    required: false
+
+outputs:
+  task-definition-arn:
+    description: 'The ARN of the registered ECS task definition'
+
+runs:
+  using: composite
+  steps:
+    - id: deploy-task-definition
+      name: deploy-task-definition
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/ecs-deploy-task-definition-action:main-d9c535e1b5bfcfcda7bbb83522eeb61f30dbe19a
+      with:
+        entrypoint: ecs-deploy-task-definition-action
+        args: --task-definition "${{ inputs.task-definition }}" --service "${{ inputs.service }}" --cluster "${{ inputs.cluster }}" --wait-for-service-stability "${{ inputs.wait-for-service-stability }}" --wait-for-minutes "${{ inputs.wait-for-minutes }}" --force-new-deployment "${{ inputs.force-new-deployment }}"
