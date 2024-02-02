@@ -1,4 +1,4 @@
-= CloudBees action: Deploy to an Amazon Elastic Container Service (ECS).
+= CloudBees action: Deploy to Amazon ECS
 
 Use this action to deploy to an Amazon Elastic Container Service (ECS), using either the service name or an ECS task definition. 
 
