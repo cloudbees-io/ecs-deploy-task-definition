@@ -8,18 +8,23 @@ inputs:
   service:
     description: 'The name of the ECS service to deploy to. The action will only register the task definition if no service is given.'
     required: false
+    default: ''
   cluster:
     description: 'The name of the ECS cluster to deploy to.'
     required: false
+    default: ''
   wait-for-service-stability:
     description: 'Whether to wait for the ECS service to reach stable state after deploying the new task definition. Valid value is "true". Will default to not waiting.'
     required: false
+    default: ''
   wait-for-minutes:
     description: 'How long to wait for the ECS service to reach stable state, in minutes (default: 30 minutes, max: 6 hours).'
     required: false
+    default: ''
   force-new-deployment:
     description: 'Whether to force a new deployment of the service. Valid value is "true". Will default to not force a new deployment.'
     required: false
+    default: ''
 
 outputs:
   task-definition-arn:
@@ -30,7 +35,8 @@ runs:
   steps:
     - id: deploy-task-definition
       name: deploy-task-definition
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/ecs-deploy-task-definition-action:main-26c656d0c0c1bf56b8fa0d873269bab709006aa9
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/ecs-deploy-task-definition-action::main-a7d13de2ba1e317ecfeed77e03c2540970029fc7
       with:
-        entrypoint: ecs-deploy-task-definition-action
+        entrypoint: ecs_deploy_task_definition_app
         args: --task-definition "${{ inputs.task-definition }}" --service "${{ inputs.service }}" --cluster "${{ inputs.cluster }}" --wait-for-service-stability "${{ inputs.wait-for-service-stability }}" --wait-for-minutes "${{ inputs.wait-for-minutes }}" --force-new-deployment "${{ inputs.force-new-deployment }}"
+        
