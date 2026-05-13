@@ -35,7 +35,7 @@ runs:
   steps:
     - id: deploy-task-definition
       name: deploy-task-definition
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/ecs-deploy-task-definition-action:main-922c1a30d2b66619d2c67b46ed37bd9fb1a8c4ea
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/ecs-deploy-task-definition-action:main-002c1a30d2b66619d2c67b46ed37bd9fb1a8c4ea
       with:
         entrypoint: ecs_deploy_task_definition_app
         args: --task-definition "${{ inputs.task-definition }}" --service "${{ inputs.service }}" --cluster "${{ inputs.cluster }}" --wait-for-service-stability "${{ inputs.wait-for-service-stability }}" --wait-for-minutes "${{ inputs.wait-for-minutes }}" --force-new-deployment "${{ inputs.force-new-deployment }}"
